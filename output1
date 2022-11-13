@@ -1,0 +1,122 @@
+	#	Time	Action	Message	Duration / Fetch
+3	1	11:40:47	create database relation	1 row(s) affected	0.156 sec
+3	2	11:40:47	use relation	0 row(s) affected	0.000 sec
+3	3	11:40:50	create table person(
+ driver_id varchar(20) primary key,
+ name varchar(20),
+ address varchar(20)
+ 
+ )	0 row(s) affected	0.578 sec
+3	4	11:43:07	create table CAR(
+ reg_num varchar(20) primary key,
+ model varchar(20),
+ year int
+ 
+ )	0 row(s) affected	0.360 sec
+3	5	11:44:14	show tables	2 row(s) returned	0.016 sec / 0.000 sec
+3	6	11:44:14	desc person	3 row(s) returned	0.000 sec / 0.000 sec
+3	7	11:44:32	show tables	2 row(s) returned	0.000 sec / 0.000 sec
+3	8	11:50:04	create table owns(
+ driver_id varchar(20),
+ reg_no varchar(20),
+ primary key(driver_id,reg_no),
+ foreign key(driver_id) references person(driver_id) on delete cascade,
+ foreign key(reg_no) references car(reg_num) on delete cascade
+ )	0 row(s) affected	0.719 sec
+3	9	11:54:18	create table accident(
+ report_num int primary key,
+ accident_date date,
+ location varchar(20)
+ )	0 row(s) affected	0.282 sec
+3	10	12:00:07	create table participated(
+ driver_id varchar(20),
+ reg_num varchar(20),
+ report_num int,
+ damage_amount int,
+ primary key(driver_id,reg_num,report_num),
+ foreign key(driver_id) references person(driver_id),
+ foreign key(reg_num) references car(reg_num),
+ foreign key(report_num) references accident(report_num)
+ )	0 row(s) affected	0.625 sec
+3	11	12:01:31	insert into accident 
+ values(11,'2003-01-01','Mysore road')	1 row(s) affected	0.047 sec
+3	12	12:05:04	insert into accident 
+ values(12,'2004-02-02','South end')	1 row(s) affected	0.078 sec
+3	13	12:05:04	insert into accident 
+ values(13,'2003-01-21','Bull temple road')	1 row(s) affected	0.140 sec
+3	14	12:05:05	insert into accident 
+ values(14,'2003-01-01','Mysore road')	1 row(s) affected	0.110 sec
+3	15	12:05:05	insert into accident 
+ values(15,'2004-03-05','Kanakpura road')	1 row(s) affected	0.079 sec
+0	16	12:09:00	insert into participated
+ values('A01','KA052250',11,10000)	Error Code: 1452. Cannot add or update a child row: a foreign key constraint fails (`relation`.`participated`, CONSTRAINT `participated_ibfk_1` FOREIGN KEY (`driver_id`) REFERENCES `person` (`driver_id`))	0.000 sec
+0	17	12:10:26	insert into participated
+ values('A01','KA052250',11,10000)	Error Code: 1452. Cannot add or update a child row: a foreign key constraint fails (`relation`.`participated`, CONSTRAINT `participated_ibfk_1` FOREIGN KEY (`driver_id`) REFERENCES `person` (`driver_id`))	0.000 sec
+3	18	12:16:20	insert into person
+ values('a01','abc','bangalore')	1 row(s) affected	0.047 sec
+3	19	12:16:20	insert into person
+ values('a02','sa','mysore')	1 row(s) affected	0.078 sec
+3	20	12:16:20	insert into person
+ values('a03','a12','shirsi')	1 row(s) affected	0.109 sec
+0	21	12:18:33	insert into owns
+ values('a01','KA052250')	Error Code: 1452. Cannot add or update a child row: a foreign key constraint fails (`relation`.`owns`, CONSTRAINT `owns_ibfk_2` FOREIGN KEY (`reg_no`) REFERENCES `car` (`reg_num`) ON DELETE CASCADE)	0.047 sec
+0	22	12:21:04	insert into car
+ values('KA052250','verna')	Error Code: 1136. Column count doesn't match value count at row 1	0.000 sec
+0	23	12:21:18	insert into car
+ values('KA052250','verna')	Error Code: 1136. Column count doesn't match value count at row 1	0.000 sec
+0	24	12:21:25	insert into car
+ values('KA052250','verna')	Error Code: 1136. Column count doesn't match value count at row 1	0.000 sec
+3	25	12:22:05	insert into car
+ values('KA052250','verna',2019)	1 row(s) affected	0.047 sec
+3	26	12:22:18	insert into car
+ values('KA053408','benz',2022)	1 row(s) affected	0.078 sec
+3	27	12:22:18	insert into car
+ values('KA095477','bucati',2015)	1 row(s) affected	0.094 sec
+3	28	12:25:10	insert into owns
+ values('a01','KA052250')	1 row(s) affected	0.047 sec
+0	29	12:26:46	values('a02','KA053408')	Error Code: 1064. You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '('a02','KA053408')' at line 1	0.000 sec
+3	30	12:27:15	insert into owns
+ values('a02','KA053408')	1 row(s) affected	0.078 sec
+3	31	12:27:20	insert into owns
+ values('a03','KA095477')	1 row(s) affected	0.062 sec
+3	32	12:29:13	insert into participated
+ values('a01','KA052250',11,10000)	1 row(s) affected	0.047 sec
+3	33	12:29:13	insert into participated
+ values('a02','KA053408',12,50000)	1 row(s) affected	0.062 sec
+3	34	12:30:31	insert into participated
+ values('a03','KA095477',13,25000)	1 row(s) affected	0.046 sec
+3	35	12:32:30	update participated
+ set damage_amount = '75000'
+ where reg_num = 'KA053408'and report_num = 12	1 row(s) affected
+ Rows matched: 1  Changed: 1  Warnings: 0	0.063 sec
+3	36	12:32:42	select * from participated
+ LIMIT 0, 1000	3 row(s) returned	0.016 sec / 0.000 sec
+0	37	12:36:10	select count(distinct driver_id) as 'COUNT'
+ where date = 2008	Error Code: 1054. Unknown column 'driver_id' in 'field list'	0.016 sec
+0	38	12:36:36	select count(distinct driver_id) as 'COUNT' from accident
+ where date = 2008
+ LIMIT 0, 1000	Error Code: 1054. Unknown column 'driver_id' in 'field list'	0.000 sec
+0	39	12:36:59	select count(distinct driver_id) as 'COUNT' from participated
+ where date = 2008
+ LIMIT 0, 1000	Error Code: 1054. Unknown column 'date' in 'where clause'	0.000 sec
+0	40	12:37:15	select count(distinct driver_id) as 'COUNT' from participated
+ where accident_date = 2008
+ LIMIT 0, 1000	Error Code: 1054. Unknown column 'accident_date' in 'where clause'	0.000 sec
+0	41	12:38:23	select count(distinct driver_id) as 'COUNT' from participated
+ where accident_date = '2003-01-01'
+ LIMIT 0, 1000	Error Code: 1054. Unknown column 'accident_date' in 'where clause'	0.000 sec
+3	42	12:39:58	select * from participated 
+ order by damage_amount desc
+ LIMIT 0, 1000	3 row(s) returned	0.000 sec / 0.000 sec
+3	43	12:41:06	select avg(damage_amount) from participated
+ LIMIT 0, 1000	1 row(s) returned	0.000 sec / 0.000 sec
+0	44	12:44:06	select count(distinct driver_id) as 'count' from participated a,accident b
+ where a.repot_num = b.report_num and b.accident_date like '%2003'
+ LIMIT 0, 1000	Error Code: 1054. Unknown column 'a.repot_num' in 'where clause'	0.000 sec
+3	45	12:45:07	select avg(damage_amount) from participated
+ LIMIT 0, 1000	1 row(s) returned	0.000 sec / 0.000 sec
+3	46	12:45:19	select driver_id from participated
+ where damage_amount>10000
+ LIMIT 0, 1000	2 row(s) returned	0.000 sec / 0.000 sec
+3	47	12:46:55	select accident_date,location from accident
+ LIMIT 0, 1000	5 row(s) returned	0.000 sec / 0.000 sec

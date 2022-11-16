@@ -1,0 +1,104 @@
+select * from participated;
+#LIST THE ENTIRE PARTICIPATED RELATION IN THE DESCENDING ORDER OF DAMAGE 
+AMOUNT.
+select * from participated
+order by damage_amount desc;
+#FIND THE AVERAGE DAMAGE AMOUNT
+select avg(damage_amount) from participated;
+#LIST THE NAME OF DRIVERS WHOSE DAMAGE IS GREATER THAN THE AVERAGE DAMAGE 
+AMOUNT.
+select distinct per.name from person per,participated p
+where per.driver_id=p.driver_id and p.damage_amount > (select 
+avg(damage_amount) from participated); 
+#FIND MAXIMUM DAMAGE AMOUNT.
+select max(damage_amount) from participated;
+#DELETE THE TUPLE WHOSE DAMAGE AMOUNT IS BELOW THE AVERAGE DAMAGE AMOUNT.
+select avg(damage_amount) into @avg_amount from participated;
+delete from participated where damage_amount < @avg_amount;
+
+select * from car order by year asc;
+
+select count(report_num)
+from car c, participated p
+where c.reg_num and c.model='Lancer';
+
+select count(distinct driver_id) CNT
+from participated a, accident b
+where a.report_num=b.report_num and b.accident_date like '__08%';
+
+
+select * from participated order by damage_amount desc;
+
+select avg(damage_amount)
+ from participated;
+ 
+select max(damage_amount)
+from participated;
+
+select driver_id from participated
+where damage_amount < (select avg(damage_amount) from participated);
+
+select p.name from person p,participated pa
+where p.driver_id = pa.driver_id and pa.damage_amount > (select avg(pa.damage_amount) from participated pa);
+
+delete from participated 
+where damage_amount  < (
+select p.d_amount from (
+select avg(damage_amount) as d_amount from participated)p);
+
+insert into accident values(17,'01-02-21','arajaji nagar');
+select count(distinct driver_id) from participated p,accident a
+where p.report_num = a.report_num and a.accident_date like '21%';
+
+select * from participated;
+#LIST THE ENTIRE PARTICIPATED RELATION IN THE DESCENDING ORDER OF DAMAGE 
+AMOUNT.
+select * from participated
+order by damage_amount desc;
+#FIND THE AVERAGE DAMAGE AMOUNT
+select avg(damage_amount) from participated;
+#LIST THE NAME OF DRIVERS WHOSE DAMAGE IS GREATER THAN THE AVERAGE DAMAGE 
+AMOUNT.
+select distinct per.name from person per,participated p
+where per.driver_id=p.driver_id and p.damage_amount > (select 
+avg(damage_amount) from participated); 
+#FIND MAXIMUM DAMAGE AMOUNT.
+select max(damage_amount) from participated;
+#DELETE THE TUPLE WHOSE DAMAGE AMOUNT IS BELOW THE AVERAGE DAMAGE AMOUNT.
+select avg(damage_amount) into @avg_amount from participated;
+delete from participated where damage_amount < @avg_amount;
+
+select * from car order by year asc;
+
+select count(report_num)
+from car c, participated p
+where c.reg_num and c.model='Lancer';
+
+select count(distinct driver_id) CNT
+from participated a, accident b
+where a.report_num=b.report_num and b.accident_date like '__08%';
+
+
+select * from participated order by damage_amount desc;
+
+select avg(damage_amount)
+ from participated;
+ 
+select max(damage_amount)
+from participated;
+
+select driver_id from participated
+where damage_amount < (select avg(damage_amount) from participated);
+
+select p.name from person p,participated pa
+where p.driver_id = pa.driver_id and pa.damage_amount > (select avg(pa.damage_amount) from participated pa);
+
+delete from participated 
+where damage_amount  < (
+select p.d_amount from (
+select avg(damage_amount) as d_amount from participated)p);
+
+insert into accident values(17,'01-02-21','arajaji nagar');
+select count(distinct driver_id) from participated p,accident a
+where p.report_num = a.report_num and a.accident_date like '21%';
+
